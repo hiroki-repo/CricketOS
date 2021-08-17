@@ -1,0 +1,3 @@
+#include "stdcall.as"
+ret=syscall(9,varptr("Hello!$"))
+ret=syscall(0)

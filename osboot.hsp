@@ -1,0 +1,2 @@
+#runtime "hsp3cl"
+run "kernel.ax"

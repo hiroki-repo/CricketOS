@@ -1,0 +1,876 @@
+#include "hsp3cl.as"
+#include "migs.as"
+#uselib "crtdll.dll"
+#func putch "_putch" int
+#cfunc getch "_getch"
+#cfunc kbhit "_kbhit"
+#module
+#deffunc z80memaccess int prm_0,int prm_1,int prm_2
+dim ptptr,3:ptptr(0)=prm_0,prm_1,prm_2:memfile ptptr:goto z80monptr@
+#global
+#include "z80.as"
+ldim z80monptr,1
+dim sclstk,8
+ldim scl,256
+scl=*sfcn_0,*sfcn_1,*sfcn_2,*sfcn_3,*sfcn_4,*sfcn_5,*sfcn_6,*sfcn_7,*sfcn_8,*sfcn_9,*sfcn_10,*sfcn_11,*sfcn_12,*sfcn_13,*sfcn_14,*sfcn_15,*sfcn_16,*sfcn_17,*sfcn_18,*sfcn_19,*sfcn_20,*sfcn_21,*sfcn_22,*sfcn_23,*sfcn_24,*sfcn_25,*sfcn_26,*sfcn_27,*sfcn_28,*sfcn_29,*sfcn_30,*sfcn_31,*sfcn_32,*sfcn_33,*sfcn_34,*sfcn_35,*sfcn_36,*sfcn_37,*sfcn_38,*sfcn_39,*sfcn_40,*sfcn_41,*sfcn_42,*sfcn_43,*sfcn_44,*sfcn_45,*sfcn_46,*sfcn_47,*sfcn_48,*sfcn_49,*sfcn_50,*sfcn_51,*sfcn_52,*sfcn_53,*sfcn_54,*sfcn_55,*sfcn_56,*sfcn_57,*sfcn_58,*sfcn_59,*sfcn_60,*sfcn_61,*sfcn_62,*sfcn_63,*sfcn_64,*sfcn_65,*sfcn_66,*sfcn_67,*sfcn_68,*sfcn_69,*sfcn_70,*sfcn_71,*sfcn_72,*sfcn_73,*sfcn_74,*sfcn_75,*sfcn_76,*sfcn_77,*sfcn_78,*sfcn_79,*sfcn_80,*sfcn_81,*sfcn_82,*sfcn_83,*sfcn_84,*sfcn_85,*sfcn_86,*sfcn_87,*sfcn_88,*sfcn_89,*sfcn_90,*sfcn_91,*sfcn_92,*sfcn_93,*sfcn_94,*sfcn_95,*sfcn_96,*sfcn_97,*sfcn_98,*sfcn_99,*sfcn_100,*sfcn_101,*sfcn_102,*sfcn_103,*sfcn_104,*sfcn_105,*sfcn_106,*sfcn_107,*sfcn_108,*sfcn_109,*sfcn_110,*sfcn_111,*sfcn_112,*sfcn_113,*sfcn_114,*sfcn_115,*sfcn_116,*sfcn_117,*sfcn_118,*sfcn_119,*sfcn_120,*sfcn_121,*sfcn_122,*sfcn_123,*sfcn_124,*sfcn_125,*sfcn_126,*sfcn_127,*sfcn_128,*sfcn_129,*sfcn_130,*sfcn_131,*sfcn_132,*sfcn_133,*sfcn_134,*sfcn_135,*sfcn_136,*sfcn_137,*sfcn_138,*sfcn_139,*sfcn_140,*sfcn_141,*sfcn_142,*sfcn_143,*sfcn_144,*sfcn_145,*sfcn_146,*sfcn_147,*sfcn_148,*sfcn_149,*sfcn_150,*sfcn_151,*sfcn_152,*sfcn_153,*sfcn_154,*sfcn_155,*sfcn_156,*sfcn_157,*sfcn_158,*sfcn_159,*sfcn_160,*sfcn_161,*sfcn_162,*sfcn_163,*sfcn_164,*sfcn_165,*sfcn_166,*sfcn_167,*sfcn_168,*sfcn_169,*sfcn_170,*sfcn_171,*sfcn_172,*sfcn_173,*sfcn_174,*sfcn_175,*sfcn_176,*sfcn_177,*sfcn_178,*sfcn_179,*sfcn_180,*sfcn_181,*sfcn_182,*sfcn_183,*sfcn_184,*sfcn_185,*sfcn_186,*sfcn_187,*sfcn_188,*sfcn_189,*sfcn_190,*sfcn_191,*sfcn_192,*sfcn_193,*sfcn_194,*sfcn_195,*sfcn_196,*sfcn_197,*sfcn_198,*sfcn_199,*sfcn_200,*sfcn_201,*sfcn_202,*sfcn_203,*sfcn_204,*sfcn_205,*sfcn_206,*sfcn_207,*sfcn_208,*sfcn_209,*sfcn_210,*sfcn_211,*sfcn_212,*sfcn_213,*sfcn_214,*sfcn_215,*sfcn_216,*sfcn_217,*sfcn_218,*sfcn_219,*sfcn_220,*sfcn_221,*sfcn_222,*sfcn_223,*sfcn_224,*sfcn_225,*sfcn_226,*sfcn_227,*sfcn_228,*sfcn_229,*sfcn_230,*sfcn_231,*sfcn_232,*sfcn_233,*sfcn_234,*sfcn_235,*sfcn_236,*sfcn_237,*sfcn_238,*sfcn_239,*sfcn_240,*sfcn_241,*sfcn_242,*sfcn_243,*sfcn_244,*sfcn_245,*sfcn_246,*sfcn_247,*sfcn_248,*sfcn_249,*sfcn_250,*sfcn_251,*sfcn_252,*sfcn_253,*sfcn_254,*sfcn_255
+delimiter='$'
+ldim ccpptr,1
+lpoke ccpptr,0,_faddproc("ccp.ax")
+syscalldphptr=*syscalldph
+*ccp
+gosub *memfileinit
+goto ccpptr
+
+*syscalldph
+logmes "SYSCALL:"+str(sclstk(0))
+goto scl(sclstk(0)&0xFF)
+return
+
+#deffunc ffortmu
+	mref hspctx, 68
+	mcs = lpeek( hspctx, 4 )// 常にnull
+	mem_mcs = lpeek( hspctx, 8 )
+	prmstack = lpeek( hspctx, 828 )// addressof( HSPROUTINE -> prmstack )
+	hsproutine = 0
+	mcsret = 0
+	acpc = 0
+	if ( prmstack != 0 ) {// if not nullptr
+//		hsproutine = prmstack -4*5// - sizeof( STMDATA ) - sizeof( HSPROUTINE )
+//		hsproutine = prmstack -72 -4*5// - sizeof( STMDATA ) - sizeof( HSPROUTINE )
+		hsproutine = prmstack -72 -4*6// - sizeof( STMDATA ) - sizeof( HSPROUTINE )
+		dupptr ihsproutine, hsproutine, 4*6
+		dupptr ihsproutine2, hsproutine-4*25, 4*30
+		mcsret = lpeek( ihsproutine, 4 )
+		acpc = mcsret - mem_mcs// 中間コード的には何Byte目ぁE
+	}
+		// print them
+	/*mes "mcs="+mcs
+	mes "mem_mcs="+mem_mcs
+	mes "prmstack="+prmstack
+	mes "hsproutine="+hsproutine
+	mes "mcsret="+mcsret// 戻る箁E��のPC : 実体�Eunsigned short*でラベル値と等価
+	mes "acpc="+acpc*/
+return
+
+*memfileinit
+dim memfileinits,3:memfileinits=lpeek(syscalldphptr,0),varptr(sclstk):memfile memfileinits:return 0
+
+*retc
+goto *ccp
+retcptr=*retc
+ffortmu
+if lpeek(ihsproutine,4)=0{goto *ccp}else{lpoke ihsproutine,4,lpeek(retcptr,0):return 0}
+
+*sfcn_0
+goto *retc
+return
+*sfcn_1
+ci=getch()
+putch ci
+return ci
+*sfcn_2
+putch sclstk(1)
+return 0
+*sfcn_3
+return 0x1A
+*sfcn_4
+return 0
+*sfcn_5
+return 0
+*sfcn_6
+if sclstk(1)&0xFF=0xFF{if kbhit(){return getch()}else{return 0}}
+if sclstk(1)&0xFF=0xFE{return kbhit()}
+if sclstk(1)&0xFF=0xFD{return getch()}
+putch sclstk(1)
+return 0
+*sfcn_7
+return 0
+*sfcn_8
+return -1
+*sfcn_9
+if sclstk(1)<0x10000{dupptr datafromapp,sclstk(1)+cpm80ptr,256,2}else{dupptr datafromapp,sclstk(1),256,2}
+repeat 256:if peek(datafromapp,cnt)=delimiter{break}:putch peek(datafromapp,cnt):loop
+return 0
+*sfcn_10
+if sclstk(1)<0x10000{dupptr datafromapp,sclstk(1)+cpm80ptr,259,2}else{dupptr datafromapp,sclstk(1),259,2}
+repeat peek(datafromapp,0):repeat:if kbhit(){break}:await:loop:ci=getch():if ci=13{lenforci=cnt:break}:poke datafromapp,cnt+2,ci:putch ci:loop
+poke datafromapp,1,lenforci:poke datafromapp,lenforci+2,0x00
+return 0
+*sfcn_11
+if kbhit(){return -1}
+return 0
+*sfcn_12
+sclstk(3)=0x22
+return 0x22
+*sfcn_13
+return 0
+*sfcn_14
+drive=sclstk(1)&0xFF
+return 0
+*sfcn_15
+if sclstk(1)<0x10000{dupptr datafromapp,sclstk(1)+cpm80ptr,259,2}else{dupptr datafromapp,sclstk(1),259,2}
+if dmaptr<0x10000{dupptr datafromapp2,dmaptr+cpm80ptr,259,2}else{dupptr datafromapp2,dmaptr,259,2}
+sdim fcbfnameim,64:sdim fcbfnameim2,64
+repeat 8:if peek(datafromapp,cnt+1)!32{poke fcbfnameim,cnt,peek(datafromapp,cnt+1)}:loop
+repeat 3:if peek(datafromapp,cnt+1+8)!32{poke fcbfnameim2,cnt,peek(datafromapp,cnt+1+8)}:loop
+fcbfname="":fcbfname=fcbfnameim+"."+fcbfnameim2
+exist fcbfname:fsize=strsize:if fsize!-1{
+poke datafromapp,0x0C,(peek(datafromapp,12)&0x1f)|(peek(datafromapp,13)<<5)
+block=fsize-peek(datafromapp,0x0C)*16384
+repeat 16
+if (block>cnt*1024){poke datafromapp,cnt+16,cnt+1}else{poke datafromapp,cnt+16,0}
+loop
+poke datafromapp,14,0
+poke datafromapp,15,128
+poke datafromapp,12,0
+poke datafromapp,13,0
+poke datafromapp,32,0
+if peek(datafromapp,32)=0xFF{
+if (block<0){poke datafromapp,32,0}else{if (block<16384){poke datafromapp,32,((block>>7)&0xFF)}else{poke datafromapp,32,127}}
+}
+
+if peek(datafromapp,0)=0{drives=0}else{drives=peek(datafromapp,0)-1}
+return 0
+}
+
+return -1
+*sfcn_16
+if sclstk(1)<0x10000{dupptr datafromapp,sclstk(1)+cpm80ptr,259,2}else{dupptr datafromapp,sclstk(1),259,2}
+if dmaptr<0x10000{dupptr datafromapp2,dmaptr+cpm80ptr,259,2}else{dupptr datafromapp2,dmaptr,259,2}
+sdim fcbfnameim,64:sdim fcbfnameim2,64
+repeat 8:if peek(datafromapp,cnt+1)!32{poke fcbfnameim,cnt,peek(datafromapp,cnt+1)}:loop
+repeat 3:if peek(datafromapp,cnt+1+8)!32{poke fcbfnameim2,cnt,peek(datafromapp,cnt+1+8)}:loop
+fcbfname="":fcbfname=fcbfnameim+"."+fcbfnameim2
+exist fcbfname:fsize=strsize:if fsize!-1{
+poke datafromapp,0x0C,(peek(datafromapp,12)&0x1f)|(peek(datafromapp,13)<<5)
+block=fsize-peek(datafromapp,0x0C)*16384
+repeat 16
+if (block>cnt*1024){poke datafromapp,cnt+16,cnt+1}else{poke datafromapp,cnt+16,0}
+loop
+if peek(datafromapp,32)=0xFF{
+if (block<0){poke datafromapp,32,0}else{if (block<16384){poke datafromapp,32,((block>>7)&0xFF)}else{poke datafromapp,32,127}}
+}
+return 0
+}
+return -1
+*sfcn_17
+if sclstk(1)<0x10000{dupptr datafromapp,sclstk(1)+cpm80ptr,259,2}else{dupptr datafromapp,sclstk(1),259,2}
+if dmaptr<0x10000{dupptr datafromapp2,dmaptr+cpm80ptr,259,2}else{dupptr datafromapp2,dmaptr,259,2}
+findidx=0
+sdim fcbfnameim,64:sdim fcbfnameim2,64
+repeat 8:if peek(datafromapp,cnt+1)!32{poke fcbfnameim,cnt,peek(datafromapp,cnt+1)}:loop
+repeat 3:if peek(datafromapp,cnt+1+8)!32{poke fcbfnameim2,cnt,peek(datafromapp,cnt+1+8)}:loop
+fcbfname="":fcbfname=fcbfnameim+"."+fcbfnameim2:dirlistforck=""
+dirlist dirlistforck,fcbfname,1:filelong=stat
+sdim cmp,11
+memset cmp,0x20,11,0
+sdim fname12,256,2
+notesel dirlistforck
+noteget dirlistforckx,findidx
+fname12(0)=getpath(dirlistforckx,8+1),getpath(dirlistforckx,8+2):fname12(1)=strmid(fname12(1),1,3)
+memcpy cmp,fname12(0),8,0,0
+memcpy cmp,fname12(1),3,8,0
+repeat 11:if peek(cmp,cnt)=0{poke cmp,cnt,32}:loop
+repeat 11:if peek(cmp,cnt)>='a' and peek(cmp,cnt)<='z'{poke cmp,cnt,peek(cmp,cnt)-32}:loop
+if (filelong>0){
+sdim fcbfnameim,64:sdim fcbfnameim2,64
+repeat 8:if peek(cmp,cnt)!32{poke fcbfnameim,cnt,peek(cmp,cnt)}:loop
+repeat 3:if peek(cmp,cnt+8)!32{poke fcbfnameim2,cnt,peek(cmp,cnt+8)}:loop
+fcbfname="":fcbfname=fcbfnameim+"."+fcbfnameim2
+exist fcbfname:fsize=strsize:if fsize!-1{
+memset datafromapp2,0,32,0
+memcpy datafromapp2,cmp,11,1,0
+if (fsize<16384){poke datafromapp2,13,((fsize>>7)&0xFF)}else{poke datafromapp2,13,127}
+;poke datafromapp2,0x0C,(peek(datafromapp2,12)&0x1f)|(peek(datafromapp2,13)<<5)
+;block=fsize-peek(datafromapp2,0x0C)*16384
+repeat 16
+if (fsize>cnt*1024){poke datafromapp2,cnt+16,cnt+1}else{poke datafromapp2,cnt+16,0}
+loop
+findidx+=1
+return 0
+}
+}
+return -1
+*sfcn_18
+if sclstk(1)<0x10000{dupptr datafromapp,sclstk(1)+cpm80ptr,259,2}else{dupptr datafromapp,sclstk(1),259,2}
+if dmaptr<0x10000{dupptr datafromapp2,dmaptr+cpm80ptr,259,2}else{dupptr datafromapp2,dmaptr,259,2}
+if findidx<filelong{
+sdim cmp,11
+memset cmp,0x20,11,0
+sdim fname12,256,2
+notesel dirlistforck
+noteget dirlistforckx,findidx
+fname12(0)=getpath(dirlistforckx,8+1),getpath(dirlistforckx,8+2):fname12(1)=strmid(fname12(1),1,3)
+memcpy cmp,fname12(0),8,0,0
+memcpy cmp,fname12(1),3,8,0
+repeat 11:if peek(cmp,cnt)=0{poke cmp,cnt,32}:loop
+repeat 11:if peek(cmp,cnt)>='a' and peek(cmp,cnt)<='z'{poke cmp,cnt,peek(cmp,cnt)-32}:loop
+if (filelong>0){
+sdim fcbfnameim,64:sdim fcbfnameim2,64
+repeat 8:if peek(cmp,cnt)!32{poke fcbfnameim,cnt,peek(cmp,cnt)}:loop
+repeat 3:if peek(cmp,cnt+8)!32{poke fcbfnameim2,cnt,peek(cmp,cnt+8)}:loop
+fcbfname="":fcbfname=fcbfnameim+"."+fcbfnameim2
+exist fcbfname:fsize=strsize:if fsize!-1{
+memset datafromapp2,0,32,0
+memcpy datafromapp2,cmp,11,1,0
+if (fsize<16384){poke datafromapp2,13,((fsize>>7)&0xFF)}else{poke datafromapp2,13,127}
+;poke datafromapp2,0x0C,(peek(datafromapp2,12)&0x1f)|(peek(datafromapp2,13)<<5)
+;block=fsize-peek(datafromapp2,0x0C)*16384
+repeat 16
+if (fsize>cnt*1024){poke datafromapp2,cnt+16,cnt+1}else{poke datafromapp2,cnt+16,0}
+loop
+findidx+=1
+return 0
+}
+}
+}
+findidx=0
+return -1
+*sfcn_19
+if sclstk(1)<0x10000{dupptr datafromapp,sclstk(1)+cpm80ptr,259,2}else{dupptr datafromapp,sclstk(1),259,2}
+if dmaptr<0x10000{dupptr datafromapp2,dmaptr+cpm80ptr,259,2}else{dupptr datafromapp2,dmaptr,259,2}
+sdim fcbfnameim,64:sdim fcbfnameim2,64
+repeat 8:if peek(datafromapp,cnt+1)!32{poke fcbfnameim,cnt,peek(datafromapp,cnt+1)}:loop
+repeat 3:if peek(datafromapp,cnt+1+8)!32{poke fcbfnameim2,cnt,peek(datafromapp,cnt+1+8)}:loop
+fcbfname="":fcbfname=fcbfnameim+"."+fcbfnameim2
+exist fcbfname:fsize=strsize:if fsize!-1{delete fcbfname:return 0
+}
+return -1
+*sfcn_20
+if sclstk(1)<0x10000{dupptr datafromapp,sclstk(1)+cpm80ptr,259,2}else{dupptr datafromapp,sclstk(1),259,2}
+if dmaptr<0x10000{dupptr datafromapp2,dmaptr+cpm80ptr,259,2}else{dupptr datafromapp2,dmaptr,259,2}
+record=peek(datafromapp,32)&0x7F
+record+=(peek(datafromapp,12)&0x1F)<<7
+record+=peek(datafromapp,13)<<12
+record+=peek(datafromapp,14)<<20
+sdim fcbfnameim,64:sdim fcbfnameim2,64
+repeat 8:if peek(datafromapp,cnt+1)!32{poke fcbfnameim,cnt,peek(datafromapp,cnt+1)}:loop
+repeat 3:if peek(datafromapp,cnt+1+8)!32{poke fcbfnameim2,cnt,peek(datafromapp,cnt+1+8)}:loop
+fcbfname="":fcbfname=fcbfnameim+"."+fcbfnameim2
+exist fcbfname:fsize=strsize:if fsize!-1{
+memset datafromapp2,0x1a,128,0
+bload fcbfname,datafromapp2,128,record*128
+record+=1
+poke datafromapp,32,record&0x7F
+poke datafromapp,12,(record>>7)&0x1f
+poke datafromapp,13,(record>>12)&0xFF
+poke datafromapp,14,(record>>20)&0xFF
+if (record*128)>fsize+1{return 1}
+return 0
+}
+return 1
+*sfcn_21
+if sclstk(1)<0x10000{dupptr datafromapp,sclstk(1)+cpm80ptr,259,2}else{dupptr datafromapp,sclstk(1),259,2}
+if dmaptr<0x10000{dupptr datafromapp2,dmaptr+cpm80ptr,259,2}else{dupptr datafromapp2,dmaptr,259,2}
+record=peek(datafromapp,32)&0x7F
+record+=(peek(datafromapp,12)&0x1F)<<7
+record+=peek(datafromapp,13)<<12
+record+=peek(datafromapp,14)<<20
+sdim fcbfnameim,64:sdim fcbfnameim2,64
+repeat 8:if peek(datafromapp,cnt+1)!32{poke fcbfnameim,cnt,peek(datafromapp,cnt+1)}:loop
+repeat 3:if peek(datafromapp,cnt+1+8)!32{poke fcbfnameim2,cnt,peek(datafromapp,cnt+1+8)}:loop
+fcbfname="":fcbfname=fcbfnameim+"."+fcbfnameim2
+exist fcbfname:fsize=strsize:if fsize!-1{
+bsave fcbfname,datafromapp2,128,record*128
+record+=1
+poke datafromapp,32,record&0x7F
+poke datafromapp,12,(record>>7)&0x1f
+poke datafromapp,13,(record>>12)&0xFF
+poke datafromapp,14,(record>>20)&0xFF
+return 0
+}
+return 1
+*sfcn_22
+if sclstk(1)<0x10000{dupptr datafromapp,sclstk(1)+cpm80ptr,259,2}else{dupptr datafromapp,sclstk(1),259,2}
+if dmaptr<0x10000{dupptr datafromapp2,dmaptr+cpm80ptr,259,2}else{dupptr datafromapp2,dmaptr,259,2}
+sdim fcbfnameim,64:sdim fcbfnameim2,64
+repeat 8:if peek(datafromapp,cnt+1)!32{poke fcbfnameim,cnt,peek(datafromapp,cnt+1)}:loop
+repeat 3:if peek(datafromapp,cnt+1+8)!32{poke fcbfnameim2,cnt,peek(datafromapp,cnt+1+8)}:loop
+fcbfname="":fcbfname=fcbfnameim+"."+fcbfnameim2
+exist fcbfname:fsize=strsize:if fsize=-1{
+sdim nulldata,128
+bsave fcbfname,nulldata,128
+poke datafromapp,14,0
+poke datafromapp,15,128
+poke datafromapp,12,0
+poke datafromapp,13,0
+poke datafromapp,32,0
+return 0
+}
+return -1
+*sfcn_23
+if sclstk(1)<0x10000{dupptr datafromapp,sclstk(1)+cpm80ptr,259,2}else{dupptr datafromapp,sclstk(1),259,2}
+if dmaptr<0x10000{dupptr datafromapp2,dmaptr+cpm80ptr,259,2}else{dupptr datafromapp2,dmaptr,259,2}
+sdim fcbfnameim,64:sdim fcbfnameim2,64
+repeat 8:if peek(datafromapp,cnt+1)!32{poke fcbfnameim,cnt,peek(datafromapp,cnt+1)}:loop
+repeat 3:if peek(datafromapp,cnt+1+8)!32{poke fcbfnameim2,cnt,peek(datafromapp,cnt+1+8)}:loop
+fcbfname="":fcbfname=fcbfnameim+"."+fcbfnameim2
+sdim fcbfnameim,64:sdim fcbfnameim2,64
+repeat 8:if peek(datafromapp,cnt+17)!32{poke fcbfnameim,cnt,peek(datafromapp,cnt+17)}:loop
+repeat 3:if peek(datafromapp,cnt+17+8)!32{poke fcbfnameim2,cnt,peek(datafromapp,cnt+17+8)}:loop
+fcbfname2="":fcbfname2=fcbfnameim+"."+fcbfnameim2
+exist fcbfname:fsize=strsize:if fsize!-1{
+sdim nulldata,128
+poke datafromapp,0x0C,(peek(datafromapp,12)&0x1f)|(peek(datafromapp,13)<<5)
+block=fsize-peek(datafromapp,0x0C)*16384
+repeat 16
+if (block>cnt*1024){poke datafromapp,cnt+16,cnt+1}else{poke datafromapp,cnt+16,0}
+loop
+bcopy fcbfname,fcbfname2
+delete fcbfname
+return 0
+}
+return -1
+*sfcn_24
+sclstk(3)=0
+return 0
+*sfcn_25
+return drive
+*sfcn_26
+dmaptr=sclstk(1)
+return 0
+*sfcn_27
+return 0
+*sfcn_28
+return 0
+*sfcn_29
+return 0
+*sfcn_30
+if sclstk(1)<0x10000{dupptr datafromapp,sclstk(1)+cpm80ptr,259,2}else{dupptr datafromapp,sclstk(1),259,2}
+if dmaptr<0x10000{dupptr datafromapp2,dmaptr+cpm80ptr,259,2}else{dupptr datafromapp2,dmaptr,259,2}
+sdim fcbfnameim,64:sdim fcbfnameim2,64
+repeat 8:if peek(datafromapp,cnt+1)!32{poke fcbfnameim,cnt,peek(datafromapp,cnt+1)}:loop
+repeat 3:if peek(datafromapp,cnt+1+8)!32{poke fcbfnameim2,cnt,peek(datafromapp,cnt+1+8)}:loop
+fcbfname="":fcbfname=fcbfnameim+"."+fcbfnameim2
+exist fcbfname:fsize=strsize:if fsize!-1{
+poke datafromapp,0x0C,(peek(datafromapp,12)&0x1f)|(peek(datafromapp,13)<<5)
+block=fsize-peek(datafromapp,0x0C)*16384
+if (block<0){poke datafromapp,32,0}else{if (block<16384){poke datafromapp,32,((block>>7)&0xFF)}else{poke datafromapp,32,127}}
+return 0
+}
+
+return -1
+*sfcn_31
+return 0
+*sfcn_32
+if sclstk(1)&0xFF=0xFF{return userid}else{userid=sclstk(1)}
+return 0
+*sfcn_33
+if sclstk(1)<0x10000{dupptr datafromapp,sclstk(1)+cpm80ptr,259,2}else{dupptr datafromapp,sclstk(1),259,2}
+if dmaptr<0x10000{dupptr datafromapp2,dmaptr+cpm80ptr,259,2}else{dupptr datafromapp2,dmaptr,259,2}
+record=peek(datafromapp,33)|(peek(datafromapp,34)<<8)
+sdim fcbfnameim,64:sdim fcbfnameim2,64
+repeat 8:if peek(datafromapp,cnt+1)!32{poke fcbfnameim,cnt,peek(datafromapp,cnt+1)}:loop
+repeat 3:if peek(datafromapp,cnt+1+8)!32{poke fcbfnameim2,cnt,peek(datafromapp,cnt+1+8)}:loop
+fcbfname="":fcbfname=fcbfnameim+"."+fcbfnameim2
+exist fcbfname:fsize=strsize:if fsize!-1{
+memset datafromapp2,0x1a,128,0
+bload fcbfname,datafromapp2,128,record*128
+poke datafromapp,32,record&0x7F
+poke datafromapp,12,(record>>7)&0x1f
+poke datafromapp,13,(record>>12)&0xFF
+poke datafromapp,14,(record>>20)&0xFF
+if (record*128)>fsize+1{return 1}
+return 0
+}
+return 1
+*sfcn_34
+if sclstk(1)<0x10000{dupptr datafromapp,sclstk(1)+cpm80ptr,259,2}else{dupptr datafromapp,sclstk(1),259,2}
+if dmaptr<0x10000{dupptr datafromapp2,dmaptr+cpm80ptr,259,2}else{dupptr datafromapp2,dmaptr,259,2}
+record=peek(datafromapp,33)|(peek(datafromapp,34)<<8)
+sdim fcbfnameim,64:sdim fcbfnameim2,64
+repeat 8:if peek(datafromapp,cnt+1)!32{poke fcbfnameim,cnt,peek(datafromapp,cnt+1)}:loop
+repeat 3:if peek(datafromapp,cnt+1+8)!32{poke fcbfnameim2,cnt,peek(datafromapp,cnt+1+8)}:loop
+fcbfname="":fcbfname=fcbfnameim+"."+fcbfnameim2
+exist fcbfname:fsize=strsize:if fsize!-1{
+bsave fcbfname,datafromapp2,128,record*128
+poke datafromapp,32,record&0x7F
+poke datafromapp,12,(record>>7)&0x1f
+poke datafromapp,13,(record>>12)&0xFF
+poke datafromapp,14,(record>>20)&0xFF
+return 0
+}
+return 2
+*sfcn_35
+if sclstk(1)<0x10000{dupptr datafromapp,sclstk(1)+cpm80ptr,259,2}else{dupptr datafromapp,sclstk(1),259,2}
+if dmaptr<0x10000{dupptr datafromapp2,dmaptr+cpm80ptr,259,2}else{dupptr datafromapp2,dmaptr,259,2}
+sdim fcbfnameim,64:sdim fcbfnameim2,64
+repeat 8:if peek(datafromapp,cnt+1)!32{poke fcbfnameim,cnt,peek(datafromapp,cnt+1)}:loop
+repeat 3:if peek(datafromapp,cnt+1+8)!32{poke fcbfnameim2,cnt,peek(datafromapp,cnt+1+8)}:loop
+fcbfname="":fcbfname=fcbfnameim+"."+fcbfnameim2
+exist fcbfname:fsize=strsize:if fsize!-1{
+record=(fsize>>7)
+poke datafromapp,33,record&0xFF
+poke datafromapp,34,(record>>8)&0xFF
+poke datafromapp,35,(record>>16)&0xFF
+return 0
+}
+return -1
+*sfcn_36
+if sclstk(1)<0x10000{dupptr datafromapp,sclstk(1)+cpm80ptr,259,2}else{dupptr datafromapp,sclstk(1),259,2}
+if dmaptr<0x10000{dupptr datafromapp2,dmaptr+cpm80ptr,259,2}else{dupptr datafromapp2,dmaptr,259,2}
+record=peek(datafromapp,32)&0x7F
+record+=(peek(datafromapp,12)&0x1F)<<7
+record+=peek(datafromapp,13)<<12
+record+=peek(datafromapp,14)<<20
+poke datafromapp,33,record&0xFF
+poke datafromapp,34,(record>>8)&0xFF
+poke datafromapp,35,(record>>16)&0xFF
+return 0
+*sfcn_37
+return 0
+*sfcn_38
+return 0
+*sfcn_39
+return 0
+*sfcn_40
+goto *sfcn_34
+return 0
+*sfcn_41
+return 0
+*sfcn_42
+return 0
+*sfcn_43
+return 0
+*sfcn_44
+return 0
+*sfcn_45
+return 0
+*sfcn_46
+return 0
+*sfcn_47
+return 0
+*sfcn_48
+return 0
+*sfcn_49
+return 0
+*sfcn_50
+return 0
+*sfcn_51
+return 0
+*sfcn_52
+return 0
+*sfcn_53
+return 0
+*sfcn_54
+return 0
+*sfcn_55
+return 0
+*sfcn_56
+return 0
+*sfcn_57
+return 0
+*sfcn_58
+return 0
+*sfcn_59
+return 0
+*sfcn_60
+return 0
+*sfcn_61
+return 0
+*sfcn_62
+return 0
+*sfcn_63
+return 0
+*sfcn_64
+return 0
+*sfcn_65
+return 0
+*sfcn_66
+return 0
+*sfcn_67
+return 0
+*sfcn_68
+return 0
+*sfcn_69
+return 0
+*sfcn_70
+return 0
+*sfcn_71
+return 0
+*sfcn_72
+return 0
+*sfcn_73
+return 0
+*sfcn_74
+return 0
+*sfcn_75
+return 0
+*sfcn_76
+return 0
+*sfcn_77
+return 0
+*sfcn_78
+return 0
+*sfcn_79
+return 0
+*sfcn_80
+return 0
+*sfcn_81
+return 0
+*sfcn_82
+return 0
+*sfcn_83
+return 0
+*sfcn_84
+return 0
+*sfcn_85
+return 0
+*sfcn_86
+return 0
+*sfcn_87
+return 0
+*sfcn_88
+return 0
+*sfcn_89
+return 0
+*sfcn_90
+return 0
+*sfcn_91
+return 0
+*sfcn_92
+return 0
+*sfcn_93
+return 0
+*sfcn_94
+return 0
+*sfcn_95
+return 0
+*sfcn_96
+return 0
+*sfcn_97
+return 0
+*sfcn_98
+return 0
+*sfcn_99
+return 0
+*sfcn_100
+return 0
+*sfcn_101
+return 0
+*sfcn_102
+return 0
+*sfcn_103
+return 0
+*sfcn_104
+return 0
+*sfcn_105
+return 0
+*sfcn_106
+return 0
+*sfcn_107
+return 0
+*sfcn_108
+return 0
+*sfcn_109
+return 0
+*sfcn_110
+if sclstk(1)=0xFFFF{
+return delimiter&0xFF
+}else{
+delimiter=sclstk(1)
+}
+return 0
+*sfcn_111
+lpoke z80monptr,0,sclstk(1)
+return 0
+*sfcn_112
+return lpeek(z80monptr,0)
+*sfcn_113
+dupptr adresses,sclstk(3),4,4
+lopnum=0
+lpoke lopnum,0,sclstk(1)
+repeat lopnum:z80run adresses,0:loop
+return 0
+*sfcn_114
+dupptr adresses,sclstk(3),4,4
+z80interrupt adresses,0,sclstk(1)&0xFF
+return 0
+*sfcn_115
+dupptr adresses,sclstk(3),4,4
+z80nminterrupt adresses,0
+return 0
+*sfcn_116
+cpm80ptr=sclstk(1)
+return 0
+*sfcn_117
+return cpm80ptr
+*sfcn_118
+return stackpeek(0,(sclstk(1)&0xFF),((sclstk(1)>>8)&0xFF))
+*sfcn_119
+stackpoke 0,(sclstk(1)&0xFF),((sclstk(1)>>8)&0xFF),sclstk(3)&0xFF
+return 0
+*sfcn_120
+if sclstk(1)<0x10000{dupptr datafromapp,sclstk(1)+cpm80ptr,259,2}else{dupptr datafromapp,sclstk(1),259,2}
+gosub *memfileinit
+return _faddproc(datafromapp)
+*sfcn_121
+return 0
+*sfcn_122
+return 0
+*sfcn_123
+return 0
+*sfcn_124
+return 0
+*sfcn_125
+return 0
+*sfcn_126
+return 0
+*sfcn_127
+return 0
+*sfcn_128
+return 0
+*sfcn_129
+return 0
+*sfcn_130
+return 0
+*sfcn_131
+return 0
+*sfcn_132
+return 0
+*sfcn_133
+return 0
+*sfcn_134
+return 0
+*sfcn_135
+return 0
+*sfcn_136
+return 0
+*sfcn_137
+return 0
+*sfcn_138
+return 0
+*sfcn_139
+return 0
+*sfcn_140
+return 0
+*sfcn_141
+return 0
+*sfcn_142
+return 0
+*sfcn_143
+return 0
+*sfcn_144
+return 0
+*sfcn_145
+return 0
+*sfcn_146
+return 0
+*sfcn_147
+return 0
+*sfcn_148
+return 0
+*sfcn_149
+return 0
+*sfcn_150
+return 0
+*sfcn_151
+return 0
+*sfcn_152
+return 0
+*sfcn_153
+return 0
+*sfcn_154
+return 0
+*sfcn_155
+return 0
+*sfcn_156
+return 0
+*sfcn_157
+return 0
+*sfcn_158
+return 0
+*sfcn_159
+return 0
+*sfcn_160
+return 0
+*sfcn_161
+return 0
+*sfcn_162
+return 0
+*sfcn_163
+return 0
+*sfcn_164
+return 0
+*sfcn_165
+return 0
+*sfcn_166
+return 0
+*sfcn_167
+return 0
+*sfcn_168
+return 0
+*sfcn_169
+return 0
+*sfcn_170
+return 0
+*sfcn_171
+return 0
+*sfcn_172
+return 0
+*sfcn_173
+return 0
+*sfcn_174
+return 0
+*sfcn_175
+return 0
+*sfcn_176
+return 0
+*sfcn_177
+return 0
+*sfcn_178
+return 0
+*sfcn_179
+return 0
+*sfcn_180
+return 0
+*sfcn_181
+return 0
+*sfcn_182
+return 0
+*sfcn_183
+return 0
+*sfcn_184
+return 0
+*sfcn_185
+return 0
+*sfcn_186
+return 0
+*sfcn_187
+return 0
+*sfcn_188
+return 0
+*sfcn_189
+return 0
+*sfcn_190
+return 0
+*sfcn_191
+return 0
+*sfcn_192
+return 0
+*sfcn_193
+return 0
+*sfcn_194
+return 0
+*sfcn_195
+return 0
+*sfcn_196
+return 0
+*sfcn_197
+return 0
+*sfcn_198
+return 0
+*sfcn_199
+return 0
+*sfcn_200
+return 0
+*sfcn_201
+return 0
+*sfcn_202
+return 0
+*sfcn_203
+return 0
+*sfcn_204
+return 0
+*sfcn_205
+return 0
+*sfcn_206
+return 0
+*sfcn_207
+return 0
+*sfcn_208
+return 0
+*sfcn_209
+return 0
+*sfcn_210
+return 0
+*sfcn_211
+return 0
+*sfcn_212
+return 0
+*sfcn_213
+return 0
+*sfcn_214
+return 0
+*sfcn_215
+return 0
+*sfcn_216
+return 0
+*sfcn_217
+return 0
+*sfcn_218
+return 0
+*sfcn_219
+return 0
+*sfcn_220
+return 0
+*sfcn_221
+return 0
+*sfcn_222
+return 0
+*sfcn_223
+return 0
+*sfcn_224
+return 0
+*sfcn_225
+return 0
+*sfcn_226
+return 0
+*sfcn_227
+return 0
+*sfcn_228
+return 0
+*sfcn_229
+return 0
+*sfcn_230
+return 0
+*sfcn_231
+return 0
+*sfcn_232
+return 0
+*sfcn_233
+return 0
+*sfcn_234
+return 0
+*sfcn_235
+return 0
+*sfcn_236
+return 0
+*sfcn_237
+return 0
+*sfcn_238
+return 0
+*sfcn_239
+return 0
+*sfcn_240
+return 0
+*sfcn_241
+return 0
+*sfcn_242
+return 0
+*sfcn_243
+return 0
+*sfcn_244
+return 0
+*sfcn_245
+return 0
+*sfcn_246
+return 0
+*sfcn_247
+return 0
+*sfcn_248
+return 0
+*sfcn_249
+return 0
+*sfcn_250
+return 0
+*sfcn_251
+return 0
+*sfcn_252
+return 0
+*sfcn_253
+return 0
+*sfcn_254
+return 0
+*sfcn_255
+return 0
