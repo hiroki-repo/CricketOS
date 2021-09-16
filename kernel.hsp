@@ -1,10 +1,16 @@
 #include "hsp3cl.as"
 #include "migs.as"
 #uselib "crtdll.dll"
+#func global printf "printf" str,str
 #func putch "_putch" int
 #cfunc getch "_getch"
 #cfunc kbhit "_kbhit"
+onerror gosub *errorbypass
 #module
+/*#deffunc putch int prm_0
+tmp="":poke tmp,0,prm_0
+printf "%s",tmp
+return*/
 #deffunc z80memaccess int prm_0,int prm_1,int prm_2
 dim ptptr,3:ptptr(0)=prm_0,prm_1,prm_2:memfile ptptr:goto z80monptr@
 #global
@@ -17,9 +23,14 @@ delimiter='$'
 ldim ccpptr,1
 lpoke ccpptr,0,_faddproc("ccp.ax")
 syscalldphptr=*syscalldph
+ccpnextptr=*ccpnext
+ccpptr2=*ccp
+
 *ccp
+delimiter='$'
 gosub *memfileinit
-goto ccpptr
+gosub ccpptr
+*ccpnext
 
 *syscalldph
 logmes "SYSCALL:"+str(sclstk(0))
@@ -56,20 +67,19 @@ return
 dim memfileinits,3:memfileinits=lpeek(syscalldphptr,0),varptr(sclstk):memfile memfileinits:return 0
 
 *retc
-goto *ccp
 retcptr=*retc
 ffortmu
 if lpeek(ihsproutine,4)=0{goto *ccp}else{lpoke ihsproutine,4,lpeek(retcptr,0):return 0}
 
 *sfcn_0
 goto *retc
-return
+return 0
 *sfcn_1
 ci=getch()
 putch ci
 return ci
 *sfcn_2
-putch sclstk(1)
+putch sclstk(1)&0xFF
 return 0
 *sfcn_3
 return 0x1A
@@ -79,9 +89,9 @@ return 0
 return 0
 *sfcn_6
 if sclstk(1)&0xFF=0xFF{if kbhit(){return getch()}else{return 0}}
-if sclstk(1)&0xFF=0xFE{return kbhit()}
+if sclstk(1)&0xFF=0xFE{return (kbhit()!0)*(-1)}
 if sclstk(1)&0xFF=0xFD{return getch()}
-putch sclstk(1)
+putch sclstk(1)&0xFF
 return 0
 *sfcn_7
 return 0
@@ -255,7 +265,7 @@ poke datafromapp,32,record&0x7F
 poke datafromapp,12,(record>>7)&0x1f
 poke datafromapp,13,(record>>12)&0xFF
 poke datafromapp,14,(record>>20)&0xFF
-if (record*128)>fsize+1{return 1}
+if (record*128)>fsize{return 1}
 return 0
 }
 return 1
@@ -277,6 +287,7 @@ poke datafromapp,32,record&0x7F
 poke datafromapp,12,(record>>7)&0x1f
 poke datafromapp,13,(record>>12)&0xFF
 poke datafromapp,14,(record>>20)&0xFF
+if (record*128)>fsize{return 1}
 return 0
 }
 return 1
@@ -370,7 +381,7 @@ poke datafromapp,32,record&0x7F
 poke datafromapp,12,(record>>7)&0x1f
 poke datafromapp,13,(record>>12)&0xFF
 poke datafromapp,14,(record>>20)&0xFF
-if (record*128)>fsize+1{return 1}
+if (record*128)>fsize{return 1}
 return 0
 }
 return 1
@@ -388,6 +399,7 @@ poke datafromapp,32,record&0x7F
 poke datafromapp,12,(record>>7)&0x1f
 poke datafromapp,13,(record>>12)&0xFF
 poke datafromapp,14,(record>>20)&0xFF
+if (record*128)>fsize{return 2}
 return 0
 }
 return 2
@@ -873,4 +885,7 @@ return 0
 *sfcn_254
 return 0
 *sfcn_255
+return 0
+
+*errorbypass
 return 0
