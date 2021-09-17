@@ -336,6 +336,9 @@ if strsize!-1{
 optforexec="":optforexec=cmdname(0)+".AX"
 ldim trangent,1
 lpoke trangent,0,syscall(120,varptr(optforexec))
+cmdexex="":cmdexex=strmid(cmdline,strlen(cmdname),strlen(cmdline))
+lpoke ptrforcx(2),0,varptr(cmdexex)
+memfile ptrforcx
 gosub trangent
 }else{for cntx,0,strlen(cmdname(0)),1
 ret=syscall(2,peek(cmdname(0),cntx))
